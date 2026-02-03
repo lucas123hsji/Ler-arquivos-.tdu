@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Leitor de Pasta .tdu</title>
+</head>
+<body>
+
+<h3>Escolha uma pasta com arquivos .tdu</h3>
+
+<input type="file" id="pasta" webkitdirectory multiple>
+<pre id="saida"></pre>
+
+<script>
+document.getElementById("pasta").addEventListener("change", function () {
+  const arquivos = this.files
+  let resultado = ""
+
+  for (let file of arquivos) {
+    if (file.name.endsWith(".tdu")) {
+      resultado += "Arquivo: " + file.name + "\n"
+
+      const reader = new FileReader()
+      reader.onload = function () {
+        resultado += reader.result + "\n\n"
+        document.getElementById("saida").textContent = resultado
+      }
+      reader.readAsText(file)
+    }
+  }
+})
+</script>
+
+</body>
+</html>
